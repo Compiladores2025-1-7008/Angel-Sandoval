@@ -1,0 +1,14 @@
+funcion suma
+
+int m
+int n
+
+if (n = 0)
+  n = m
+else if (m = 0)
+   n
+else
+  n = n+m
+
+return n
+

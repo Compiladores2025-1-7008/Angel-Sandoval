@@ -1,0 +1,36 @@
+<project name="AnalizadorLexico" basedir="." default="run">
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+
+    <!-- Ruta al jar de JFlex -->
+    <path id="jflex.classpath">
+        <pathelement location="path/to/jflex.jar"/>
+    </path>
+
+    <!-- Limpiar el directorio de compilación -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- Generar Lexer.java usando JFlex -->
+    <target name="jflex">
+        <java classname="JFlex" classpathref="jflex.classpath" fork="true">
+            <arg value="src/main/jflex/Lexer.flex"/>
+        </java>
+    </target>
+
+    <!-- Compilar los archivos de Java -->
+    <target name="compile" depends="jflex">
+        <mkdir dir="${build.dir}"/>
+        <javac srcdir="${src.dir}" destdir="${build.dir}" includeantruntime="false">
+            <compilerarg value="-Xlint:unchecked"/>
+        </javac>
+    </target>
+
+    <!-- Ejecutar el Lexer con el archivo de entrada -->
+    <target name="run" depends="compile">
+        <java classname="main.jflex.Lexer" classpath="${build.dir}" fork="true">
+            <arg value="src/tst/prueba.txt"/>
+        </java>
+    </target>
+</project>
