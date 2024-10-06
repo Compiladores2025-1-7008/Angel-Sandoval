@@ -1,5 +1,6 @@
 package main.java;
 
+// Implementamos la clase lexica, asignandole un valor a cada token
 public class ClaseLexica {
     public static final int INT = 1;
     public static final int FLOAT = 2;

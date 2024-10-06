@@ -41,16 +41,21 @@ public class Parser implements ParserInterface {
             System.out.println("La cadena no pertenece al lenguaje generado por la gramática");
     }
 
+    // Implementamos una función para cada producción de la gramatica, haciendo que vaya consumiendo los elementos que imp,ementamos en la clase lexica
+
+    // Simbolo inicial
     public void S() {
         declaraciones();
         sentencias();
     }
 
+    //Producción de declaraciones
     public void declaraciones() {
         declaracion();
         declaraciones_();
     }
     
+    //Producción de declaraciones'
     public void declaraciones_() {
         if (actual == ClaseLexica.INT || actual == ClaseLexica.FLOAT) {
             declaracion();
@@ -58,12 +63,14 @@ public class Parser implements ParserInterface {
         }
     }
 
+    //Producción de declaracion
     public void declaracion() {
         tipo();
         lista_var();
-        eat(ClaseLexica.PCOMA); // ";"
+        eat(ClaseLexica.PCOMA);
     }
     
+    //Producción de tipo
     public void tipo() {
         if (actual == ClaseLexica.INT) {
             eat(ClaseLexica.INT);
@@ -74,25 +81,28 @@ public class Parser implements ParserInterface {
         }
     }
     
+    //Producción de lista_var
     public void lista_var() {
         eat(ClaseLexica.ID);
         lista_var_();
     }
     
+    //Producción de lista_var'
     public void lista_var_() {
         if (actual == ClaseLexica.COMA) {
             eat(ClaseLexica.COMA);
             eat(ClaseLexica.ID);
             lista_var_();
         }
-        // si no hay coma, epsilon 
     }
     
+    //Producción de sentencias
     public void sentencias() {
         sentencia();
         sentencias_();
     }
     
+    //Producción de sentencias'
     public void sentencias_() {
         if (actual == ClaseLexica.ID || actual == ClaseLexica.IF || actual == ClaseLexica.WHILE) {
             sentencia();
@@ -100,6 +110,7 @@ public class Parser implements ParserInterface {
         }
     }
     
+    //Producción de sentencia
     public void sentencia() {
         if (actual == ClaseLexica.ID) {
             eat(ClaseLexica.ID);
@@ -125,11 +136,13 @@ public class Parser implements ParserInterface {
         }
     }
 
+    //Producción de expresion
     public void expresion() {
         termino();
         expresion_();
     }
     
+    //Producción de expresion'
     public void expresion_() {
         if (actual == ClaseLexica.ADD) {
             eat(ClaseLexica.ADD);
@@ -142,11 +155,13 @@ public class Parser implements ParserInterface {
         }
     }
     
+    //Producción de termino
     public void termino() {
         factor();
         termino_();
     }
     
+    //Producción de termino'
     public void termino_() {
         if (actual == ClaseLexica.TIMES) {
             eat(ClaseLexica.TIMES);
@@ -158,7 +173,9 @@ public class Parser implements ParserInterface {
             termino_();
         }
     }
-    
+
+
+    //Producción de factor
     public void factor() {
         if (actual == ClaseLexica.ID) {
             eat(ClaseLexica.ID);
