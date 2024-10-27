@@ -2,15 +2,15 @@
   import java.lang.Math;
   import java.io.Reader;
   import java.io.IOException;
-  import main.jflex.Lexer;
+  import src.main.jflex.Lexer;
 %}
 
 /* Declaraciones de YACC */
 %token NUM NL
 %token PLUS MINUS TIMES DIV POW NEG LPAREN RPAREN
 
-%left RESTA SUMA
-%left MULT DIV
+%left PLUS MINUS
+%left TIMES DIV
 %right POW /* Exponenciación */
 %left NEG   /* Negación unaria */
 %nonassoc LPAR RPAR
@@ -29,13 +29,13 @@ line:
 
 exp:
     NUM              { $$ = $1; }
-  | exp SUMA exp     { $$ = new ParserVal($1.dval + $3.dval); }
-  | exp RESTA exp    { $$ = new ParserVal($1.dval - $3.dval); }
-  | exp MULT exp     { $$ = new ParserVal($1.dval * $3.dval); }
+  | exp PLUS exp     { $$ = new ParserVal($1.dval + $3.dval); }
+  | exp MINUS exp    { $$ = new ParserVal($1.dval - $3.dval); }
+  | exp TIMES exp     { $$ = new ParserVal($1.dval * $3.dval); }
   | exp DIV exp      { $$ = new ParserVal($1.dval / $3.dval); }
-  | RESTA exp %prec NEG { $$ = new ParserVal(-$2.dval); }
+  | MINUS exp %prec NEG { $$ = new ParserVal(-$2.dval); }
   | exp POW exp      { $$ = new ParserVal(Math.pow($1.dval, $3.dval)); }
-  | LPAR exp RPAR    { $$ = $2; }
+  | LPAREN exp RPAREN   { $$ = $2; }
 ;
 
 %%
