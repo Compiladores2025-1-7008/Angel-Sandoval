@@ -2,7 +2,7 @@
   import java.lang.Math;
   import java.io.Reader;
   import java.io.IOException;
-  import src.main.jflex.Lexer;
+  import main.jflex.Lexer;
 %}
 
 /* Declaraciones de YACC */
